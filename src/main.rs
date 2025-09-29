@@ -2,8 +2,8 @@ use chrono::Local;
 use clap::{Parser, ValueEnum};
 use env_logger::Builder;
 use image::RgbImage;
-use log::info;
 use log::LevelFilter;
+use log::info;
 use std::io::Write;
 
 mod algorithm;
@@ -30,10 +30,10 @@ impl std::fmt::Display for Algorithm {
 
 impl Algorithm {
     pub fn create_image(&self, args: &Args) -> Result<RgbImage, Error> {
-        if args.width % args.title_size != 0 {
+        if args.width.is_multiple_of(args.title_size) {
             return Err(Error::new_argument("width must be a mutiple of title size"));
         }
-        if args.height % args.title_size != 0 {
+        if args.height.is_multiple_of(args.title_size) {
             return Err(Error::new_argument(
                 "height must be a mutiple of title size",
             ));
